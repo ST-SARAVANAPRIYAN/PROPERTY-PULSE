@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Pulse - Real Estate Analytics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            height: 100vh;
+            overflow: auto;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            color: #333;
+        }
+
+        /* Blurred content style */
+        .blurred-content {
+            filter: blur(0px);
+            user-select: none;
+        }
+        
+        /* Parallax wrapper and items */
+        .parallax-wrapper {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+            perspective: 1500px;
+            z-index: -1;
+        }
+        
+        .parallax-item {
+            position: absolute;
+            transform-style: preserve-3d;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            pointer-events: none;
+        }
+        
+        .parallax-item img {
+            display: block;
+            width: 100%;
+        }
+        
+        /* Animations for elements */
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+            }
+            33% {
+                transform: translateY(-15px) rotate(5deg) scale(1.05);
+            }
+            66% {
+                transform: translateY(10px) rotate(-3deg) scale(0.95);
+            }
+            100% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+            }
+        }
+        
+        @keyframes float-reverse {
+            0% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+            }
+            33% {
+                transform: translateY(15px) rotate(-5deg) scale(0.95);
+            }
+            66% {
+                transform: translateY(-10px) rotate(3deg) scale(1.05);
+            }
+            100% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        /* Apply animations to elements */
+        .parallax-item.element-1 img {
+            animation: float 12s ease-in-out infinite;
+        }
+        
+        .parallax-item.element-2 img {
+            animation: float-reverse 10s ease-in-out infinite;
+            animation-delay: 0.5s;
+        }
+        
+        .parallax-item.element-3 img {
+            animation: float 8s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+        
+        .parallax-item.element-4 img {
+            animation: float-reverse 14s ease-in-out infinite;
+            animation-delay: 1.5s;
+        }
+        
+        .parallax-item.element-5 img {
+            animation: float 9s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+        
+        .parallax-item.element-6 img {
+            animation: pulse 15s ease-in-out infinite;
+        }
+        
+        .parallax-item.element-7 img {
+            animation: float-reverse 13s ease-in-out infinite;
+            animation-delay: 1.2s;
+        }
+        
+        .parallax-item.element-8 img {
+            animation: float 11s ease-in-out infinite;
+            animation-delay: 0.7s;
+        }
+        
+        .parallax-item.element-9 img {
+            animation: float-reverse 15s ease-in-out infinite;
+            animation-delay: 0.3s;
+        }
+        
+        .parallax-item.element-10 img {
+            animation: float 10s ease-in-out infinite;
+            animation-delay: 2.5s;
+        }
+        
+        .parallax-item.element-11 img {
+            animation: pulse 12s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+        
+        .parallax-item.element-12 img {
+            animation: float 8.5s ease-in-out infinite;
+            animation-delay: 0.2s;
+        }
+        
+        .parallax-item.element-13 img {
+            animation: float-reverse 14s ease-in-out infinite;
+            animation-delay: 1.7s;
+        }
+        
+        /* Position and size for elements */
+        .parallax-item.element-bg {
+            width: 100%;
+            height: 100%;
+            top: 50%;
+            left: 50%;
+            z-index: -15;
+        }
+        .parallax-item.element-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .parallax-item.element-1 {
+            width: 180px;
+            top: 15%;
+            left: 20%;
+            z-index: -2;
+        }
+        .parallax-item.element-2 {
+            width: 150px;
+            top: 75%;
+            left: 85%;
+            z-index: -3;
+        }
+        .parallax-item.element-3 {
+            width: 120px;
+            top: 65%;
+            left: 25%;
+            z-index: -4;
+        }
+        .parallax-item.element-4 {
+            width: 170px;
+            top: 25%;
+            left: 80%;
+            z-index: -5;
+        }
+        .parallax-item.element-5 {
+            width: 140px;
+            top: 45%;
+            left: 15%;
+            z-index: -6;
+        }
+        .parallax-item.element-6 {
+            width: 200px;
+            top: 85%;
+            left: 55%;
+            z-index: -7;
+        }
+        .parallax-item.element-7 {
+            width: 130px;
+            top: 20%;
+            left: 45%;
+            z-index: -8;
+        }
+        .parallax-item.element-8 {
+            width: 160px;
+            top: 60%;
+            left: 90%;
+            z-index: -2;
+        }
+        .parallax-item.element-9 {
+            width: 150px;
+            top: 70%;
+            left: 40%;
+            z-index: -3;
+        }
+        .parallax-item.element-10 {
+            width: 120px;
+            top: 30%;
+            left: 65%;
+            z-index: -4;
+        }
+        .parallax-item.element-11 {
+            width: 180px;
+            top: 50%;
+            left: 75%;
+            z-index: -5;
+        }
+        .parallax-item.element-12 {
+            width: 140px;
+            top: 40%;
+            left: 30%;
+            z-index: -6;
+        }
+        .parallax-item.element-13 {
+            width: 160px;
+            top: 10%;
+            left: 10%;
+            z-index: -7;
+        }
+
+        /* Main content styles */
+        .main-container {
+            background-color: rgba(255, 255, 255, 0.381);
+            backdrop-filter: blur(5px);
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 42px;
+            color: #0a3d62;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .tagline {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .content-section {
+            margin-bottom: 40px;
+        }
+        
+        h2 {
+            font-size: 28px;
+            color: #0a3d62;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+        }
+        
+        .feature-box {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            flex: 1 1 250px;
+            max-width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-box h3 {
+            color: #0a3d62;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            color: #4a69bd;
+            margin-bottom: 20px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #0a3d62, #4a69bd);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #0c2461, #1e3799);
+            box-shadow: 0 5px 15px rgba(26, 83, 181, 0.4);
+        }
+        
+        .btn-outline {
+            border: 2px solid #0a3d62;
+            color: #0a3d62;
+            background: transparent;
+        }
+        
+        .btn-outline:hover {
+            background-color: #0a3d62;
+            color: white;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #777;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="parallax-wrapper">
+    <div class="parallax-item element-bg" data-speedx="0.01" data-speedy="0.01" data-speedz="0" data-rotation="0">
+        <img src="PP-BG.gif" alt="Background" />
+    </div>
+    <div class="parallax-item element-1" data-speedx="-0.03" data-speedy="0.02" data-speedz="0.5" data-rotation="0.8">
+        <img src="PP-ELEMENTS (1).png" alt="Element 1" />
+    </div>
+    <div class="parallax-item element-2" data-speedx="0.04" data-speedy="-0.02" data-speedz="1" data-rotation="-0.5">
+        <img src="PP-ELEMENTS (2).png" alt="Element 2" />
+    </div>
+    <div class="parallax-item element-3" data-speedx="-0.02" data-speedy="0.04" data-speedz="1.5" data-rotation="1">
+        <img src="PP-ELEMENTS (3).png" alt="Element 3" />
+    </div>
+    <div class="parallax-item element-4" data-speedx="0.05" data-speedy="0.01" data-speedz="0.8" data-rotation="-0.7">
+        <img src="PP-ELEMENTS (4).png" alt="Element 4" />
+    </div>
+    <div class="parallax-item element-5" data-speedx="-0.04" data-speedy="-0.03" data-speedz="1.2" data-rotation="0.6">
+        <img src="PP-ELEMENTS (5).png" alt="Element 5" />
+    </div>
+    <div class="parallax-item element-6" data-speedx="0.03" data-speedy="0.05" data-speedz="0.7" data-rotation="-0.3">
+        <img src="PP-ELEMENTS (6).png" alt="Element 6" />
+    </div>
+    <div class="parallax-item element-7" data-speedx="-0.05" data-speedy="-0.01" data-speedz="1.1" data-rotation="0.4">
+        <img src="PP-ELEMENTS (7).png" alt="Element 7" />
+    </div>
+    <div class="parallax-item element-8" data-speedx="0.02" data-speedy="-0.04" data-speedz="0.9" data-rotation="-0.9">
+        <img src="PP-ELEMENTS (8).png" alt="Element 8" />
+    </div>
+    <div class="parallax-item element-9" data-speedx="-0.01" data-speedy="0.03" data-speedz="1.3" data-rotation="0.2">
+        <img src="PP-ELEMENTS (9).png" alt="Element 9" />
+    </div>
+    <div class="parallax-item element-10" data-speedx="0.04" data-speedy="-0.03" data-speedz="1.4" data-rotation="0.5">
+        <img src="PP-ELEMENTS (10).png" alt="Element 10" />
+    </div>
+    <div class="parallax-item element-11" data-speedx="-0.03" data-speedy="0.01" data-speedz="0.6" data-rotation="-0.4">
+        <img src="PP-ELEMENTS (11).png" alt="Element 11" />
+    </div>
+    <div class="parallax-item element-12" data-speedx="0.01" data-speedy="-0.05" data-speedz="1.2" data-rotation="0.7">
+        <img src="PP-ELEMENTS (12).png" alt="Element 12" />
+    </div>
+    <div class="parallax-item element-13" data-speedx="-0.02" data-speedy="0.03" data-speedz="0.5" data-rotation="-0.6">
+        <img src="PP-ELEMENTS (13).png" alt="Element 13" />
+    </div>
+</div>
+
+<div class="main-container">
+    <div class="header">
+        <h1>Property Pulse</h1>
+        <div class="tagline">Making real estate market trends crystal clear</div>
+    </div>
+
+    <div class="content-section blurred-content">
+        <h2>Problem Statement</h2>
+        <p>In real estate, investors and analysts often struggle to track property market trends across different regions. Although large volumes of property transaction data are available, they are scattered and difficult to analyse without technical tools or expertise. This makes it challenging to make timely and informed investment decisions.</p>
+        
+        <h2>Our Solution</h2>
+        <p>Property Pulse addresses this need by offering an interactive dashboard that brings together key real estate metrics such as pricing trends, rental yields, and regional growth patterns into a single, user-friendly platform. By simplifying complex data and highlighting actionable insights, Property Pulse helps users make informed, data-driven decisions in the real estate investment space.</p>
+    </div>
+
+    <div class="features">
+        <div class="feature-box">
+            <div class="feature-icon">📊</div>
+            <h3>Visual Market Trends</h3>
+            <p>Interactive charts displaying real estate market trends across various regions</p>
+        </div>
+        <div class="feature-box">
+            <div class="feature-icon">🔍</div>
+            <h3>Transaction Analysis</h3>
+            <p>Deep insights into transaction values, land prices, and property usage</p>
+        </div>
+        <div class="feature-box">
+            <div class="feature-icon">📈</div>
+            <h3>Growth Tracking</h3>
+            <p>Monitor growth opportunities and rental yields with comprehensive charts</p>
+        </div>
+    </div>
+
+    <div class="cta-buttons">
+        <a href="login.html" class="btn btn-primary">Log In</a>
+        <a href="register.html" class="btn btn-outline">Register</a>
+    </div>
+
+    <div class="footer">
+        <p>© 2025 Property Pulse. All rights reserved.</p>
+    </div>
+</div>
+
+<script>
+    // Parallax effect
+    const parallaxItems = document.querySelectorAll('.parallax-item');
+    document.addEventListener('mousemove', e => {
+        let xValue = e.clientX - window.innerWidth / 2;
+        let yValue = e.clientY - window.innerHeight / 2;
+
+        parallaxItems.forEach(el => {
+            let speedx = parseFloat(el.dataset.speedx);
+            let speedy = parseFloat(el.dataset.speedy);
+            let speedz = parseFloat(el.dataset.speedz);
+            let rotation = parseFloat(el.dataset.rotation);
+            
+            let isInLeft = parseFloat(getComputedStyle(el).left) < window.innerWidth / 2 ? 1 : -1;
+            let zValue = (e.clientX - parseFloat(getComputedStyle(el).left)) * isInLeft * 0.1;
+
+            el.style.transform = `
+                perspective(1500px)
+                translateZ(${zValue * speedz}px)
+                rotateY(${xValue * rotation * 0.01}deg)
+                translateX(calc(-50% + ${-xValue * speedx}px))
+                translateY(calc(-50% + ${-yValue * speedy}px))
+            `;
+        });
+    });
+
+    // Store user data
+    const users = [
+        { email: "user@example.com", password: "password123", name: "Demo User" },
+        { email: "admin@propertypulse.com", password: "admin123", name: "Admin" }
+    ];
+    
+    // Save to localStorage for testing purposes
+    localStorage.setItem('users', JSON.stringify(users));
+</script>
+</body>
+</html>

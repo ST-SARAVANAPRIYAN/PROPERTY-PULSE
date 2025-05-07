@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Pulse - Register</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            height: 100vh;
+            overflow: auto;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Parallax wrapper and items */
+        .parallax-wrapper {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+            perspective: 1500px;
+            z-index: -1;
+        }
+        
+        .parallax-item {
+            position: absolute;
+            transform-style: preserve-3d;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            pointer-events: none;
+        }
+        
+        .parallax-item img {
+            display: block;
+            width: 100%;
+        }
+        
+        /* Animations for elements */
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+            }
+            33% {
+                transform: translateY(-15px) rotate(5deg) scale(1.05);
+            }
+            66% {
+                transform: translateY(10px) rotate(-3deg) scale(0.95);
+            }
+            100% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+            }
+        }
+        
+        @keyframes float-reverse {
+            0% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+            }
+            33% {
+                transform: translateY(15px) rotate(-5deg) scale(0.95);
+            }
+            66% {
+                transform: translateY(-10px) rotate(3deg) scale(1.05);
+            }
+            100% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        /* Apply animations to elements */
+        .parallax-item.element-1 img {
+            animation: float 12s ease-in-out infinite;
+        }
+        
+        .parallax-item.element-2 img {
+            animation: float-reverse 10s ease-in-out infinite;
+            animation-delay: 0.5s;
+        }
+        
+        .parallax-item.element-3 img {
+            animation: float 8s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+        
+        .parallax-item.element-4 img {
+            animation: float-reverse 14s ease-in-out infinite;
+            animation-delay: 1.5s;
+        }
+        
+        .parallax-item.element-5 img {
+            animation: float 9s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+        
+        .parallax-item.element-6 img {
+            animation: pulse 15s ease-in-out infinite;
+        }
+        
+        .parallax-item.element-7 img {
+            animation: float-reverse 13s ease-in-out infinite;
+            animation-delay: 1.2s;
+        }
+        
+        .parallax-item.element-8 img {
+            animation: float 11s ease-in-out infinite;
+            animation-delay: 0.7s;
+        }
+        
+        .parallax-item.element-9 img {
+            animation: float-reverse 15s ease-in-out infinite;
+            animation-delay: 0.3s;
+        }
+        
+        .parallax-item.element-10 img {
+            animation: float 10s ease-in-out infinite;
+            animation-delay: 2.5s;
+        }
+        
+        .parallax-item.element-11 img {
+            animation: pulse 12s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+        
+        .parallax-item.element-12 img {
+            animation: float 8.5s ease-in-out infinite;
+            animation-delay: 0.2s;
+        }
+        
+        .parallax-item.element-13 img {
+            animation: float-reverse 14s ease-in-out infinite;
+            animation-delay: 1.7s;
+        }
+        
+        /* Position and size for elements */
+        .parallax-item.element-bg {
+            width: 100%;
+            height: 100%;
+            top: 50%;
+            left: 50%;
+            z-index: -15;
+        }
+        .parallax-item.element-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .parallax-item.element-1 {
+            width: 180px;
+            top: 15%;
+            left: 20%;
+            z-index: -2;
+        }
+        .parallax-item.element-2 {
+            width: 150px;
+            top: 75%;
+            left: 85%;
+            z-index: -3;
+        }
+        .parallax-item.element-3 {
+            width: 120px;
+            top: 65%;
+            left: 25%;
+            z-index: -4;
+        }
+        .parallax-item.element-4 {
+            width: 170px;
+            top: 25%;
+            left: 80%;
+            z-index: -5;
+        }
+        .parallax-item.element-5 {
+            width: 140px;
+            top: 45%;
+            left: 15%;
+            z-index: -6;
+        }
+        .parallax-item.element-6 {
+            width: 200px;
+            top: 85%;
+            left: 55%;
+            z-index: -7;
+        }
+        .parallax-item.element-7 {
+            width: 130px;
+            top: 20%;
+            left: 45%;
+            z-index: -8;
+        }
+        .parallax-item.element-8 {
+            width: 160px;
+            top: 60%;
+            left: 90%;
+            z-index: -2;
+        }
+        .parallax-item.element-9 {
+            width: 150px;
+            top: 70%;
+            left: 40%;
+            z-index: -3;
+        }
+        .parallax-item.element-10 {
+            width: 120px;
+            top: 30%;
+            left: 65%;
+            z-index: -4;
+        }
+        .parallax-item.element-11 {
+            width: 180px;
+            top: 50%;
+            left: 75%;
+            z-index: -5;
+        }
+        .parallax-item.element-12 {
+            width: 140px;
+            top: 40%;
+            left: 30%;
+            z-index: -6;
+        }
+        .parallax-item.element-13 {
+            width: 160px;
+            top: 10%;
+            left: 10%;
+            z-index: -7;
+        }
+        
+        /* Registration form styles */
+        .register-container {
+            background-color: rgba(255, 255, 255, 0.299);
+            backdrop-filter: blur(10px);
+            max-width: 500px;
+            width: 90%;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .logo {
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            font-size: 32px;
+            color: #0a3d62;
+            font-weight: 700;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #4a69bd;
+            box-shadow: 0 0 0 2px rgba(74, 105, 189, 0.3);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #0a3d62, #4a69bd);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #0c2461, #1e3799);
+            box-shadow: 0 5px 15px rgba(26, 83, 181, 0.4);
+        }
+        
+        .login-link {
+            margin-top: 25px;
+            font-size: 15px;
+            color: #555;
+        }
+        
+        .login-link a {
+            color: #4a69bd;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .success-message, .error-message {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .success-message {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            border: 1px solid #27ae60;
+        }
+        
+        .error-message {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+        
+        .home-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            background-color: rgba(10, 61, 98, 0.7);
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+        
+        .home-link:hover {
+            background-color: rgba(10, 61, 98, 0.9);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="home-link">← Back to Home</a>
+    
+    <div class="parallax-wrapper">
+        <div class="parallax-item element-bg" data-speedx="0.01" data-speedy="0.01" data-speedz="0" data-rotation="0">
+            <img src="PP-BG.gif" alt="Background" />
+        </div>
+        <div class="parallax-item element-1" data-speedx="-0.03" data-speedy="0.02" data-speedz="0.5" data-rotation="0.8">
+            <img src="PP-ELEMENTS (1).png" alt="Element 1" />
+        </div>
+        <div class="parallax-item element-2" data-speedx="0.04" data-speedy="-0.02" data-speedz="1" data-rotation="-0.5">
+            <img src="PP-ELEMENTS (2).png" alt="Element 2" />
+        </div>
+        <div class="parallax-item element-3" data-speedx="-0.02" data-speedy="0.04" data-speedz="1.5" data-rotation="1">
+            <img src="PP-ELEMENTS (3).png" alt="Element 3" />
+        </div>
+        <div class="parallax-item element-4" data-speedx="0.05" data-speedy="0.01" data-speedz="0.8" data-rotation="-0.7">
+            <img src="PP-ELEMENTS (4).png" alt="Element 4" />
+        </div>
+        <div class="parallax-item element-5" data-speedx="-0.04" data-speedy="-0.03" data-speedz="1.2" data-rotation="0.6">
+            <img src="PP-ELEMENTS (5).png" alt="Element 5" />
+        </div>
+        <div class="parallax-item element-6" data-speedx="0.03" data-speedy="0.05" data-speedz="0.7" data-rotation="-0.3">
+            <img src="PP-ELEMENTS (6).png" alt="Element 6" />
+        </div>
+        <div class="parallax-item element-7" data-speedx="-0.05" data-speedy="-0.01" data-speedz="1.1" data-rotation="0.4">
+            <img src="PP-ELEMENTS (7).png" alt="Element 7" />
+        </div>
+        <div class="parallax-item element-8" data-speedx="0.02" data-speedy="-0.04" data-speedz="0.9" data-rotation="-0.9">
+            <img src="PP-ELEMENTS (8).png" alt="Element 8" />
+        </div>
+        <div class="parallax-item element-9" data-speedx="-0.01" data-speedy="0.03" data-speedz="1.3" data-rotation="0.2">
+            <img src="PP-ELEMENTS (9).png" alt="Element 9" />
+        </div>
+        <div class="parallax-item element-10" data-speedx="0.04" data-speedy="-0.03" data-speedz="1.4" data-rotation="0.5">
+            <img src="PP-ELEMENTS (10).png" alt="Element 10" />
+        </div>
+        <div class="parallax-item element-11" data-speedx="-0.03" data-speedy="0.01" data-speedz="0.6" data-rotation="-0.4">
+            <img src="PP-ELEMENTS (11).png" alt="Element 11" />
+        </div>
+        <div class="parallax-item element-12" data-speedx="0.01" data-speedy="-0.05" data-speedz="1.2" data-rotation="0.7">
+            <img src="PP-ELEMENTS (12).png" alt="Element 12" />
+        </div>
+        <div class="parallax-item element-13" data-speedx="-0.02" data-speedy="0.03" data-speedz="0.5" data-rotation="-0.6">
+            <img src="PP-ELEMENTS (13).png" alt="Element 13" />
+        </div>
+    </div>
+    
+    <div class="register-container">
+        <div class="logo">
+            <h1>Property Pulse</h1>
+        </div>
+        
+        <form id="registerForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" class="form-control" placeholder="Enter your first name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" class="form-control" placeholder="Enter your last name" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Create a password" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password" required>
+            </div>
+            
+            <div class="success-message" id="successMsg"></div>
+            <div class="error-message" id="errorMsg"></div>
+            
+            <button type="submit" class="btn btn-primary">Register</button>
+            
+            <div class="login-link">
+                Already have an account? <a href="login.html">Login here</a>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        // Parallax effect
+        const parallaxItems = document.querySelectorAll('.parallax-item');
+        document.addEventListener('mousemove', e => {
+            let xValue = e.clientX - window.innerWidth / 2;
+            let yValue = e.clientY - window.innerHeight / 2;
+
+            parallaxItems.forEach(el => {
+                let speedx = parseFloat(el.dataset.speedx);
+                let speedy = parseFloat(el.dataset.speedy);
+                let speedz = parseFloat(el.dataset.speedz);
+                let rotation = parseFloat(el.dataset.rotation);
+                
+                let isInLeft = parseFloat(getComputedStyle(el).left) < window.innerWidth / 2 ? 1 : -1;
+                let zValue = (e.clientX - parseFloat(getComputedStyle(el).left)) * isInLeft * 0.1;
+
+                el.style.transform = `
+                    perspective(1500px)
+                    translateZ(${zValue * speedz}px)
+                    rotateY(${xValue * rotation * 0.01}deg)
+                    translateX(calc(-50% + ${-xValue * speedx}px))
+                    translateY(calc(-50% + ${-yValue * speedy}px))
+                `;
+            });
+        });
+
+        // Registration functionality
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form input values
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+            
+            // Reset messages
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'none';
+            
+            // Validation
+            if (password !== confirmPassword) {
+                errorMsg.textContent = 'Passwords do not match. Please try again.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+            
+            // Get existing users from localStorage
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            // Check if email already exists
+            if (users.some(user => user.email === email)) {
+                errorMsg.textContent = 'Email already registered. Please use a different email or login.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+            
+            // Create new user object
+            const newUser = {
+                firstName,
+                lastName,
+                name: `${firstName} ${lastName}`,
+                email,
+                password
+            };
+            
+            // Add new user to users array
+            users.push(newUser);
+            
+            // Save updated users array to localStorage
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Show success message
+            successMsg.textContent = 'Registration successful! Redirecting to login page...';
+            successMsg.style.display = 'block';
+            
+            // Reset form
+            document.getElementById('registerForm').reset();
+            
+            // Redirect to login page after a delay
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
