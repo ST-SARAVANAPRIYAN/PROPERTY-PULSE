@@ -491,12 +491,14 @@
             margin-bottom: 30px;
             font-weight: 400;
         }
-        
-        .content-section {
+          .content-section {
             margin-bottom: 60px;
             animation: fadeIn 0.8s ease-out forwards;
             animation-delay: 0.2s;
             opacity: 0;
+            padding-top: 80px;  /* Added to create space for navbar */
+            margin-top: -80px;  /* Offset the padding to maintain visual spacing */
+            scroll-margin-top: 80px; /* Modern browsers support this property */
         }
         
         @keyframes fadeIn {
@@ -528,8 +530,7 @@
             margin-bottom: 20px;
             color: #444;
         }
-        
-        /* Enhanced features section */
+          /* Enhanced features section */
         .features {
             display: flex;
             flex-wrap: wrap;
@@ -539,6 +540,9 @@
             animation: fadeIn 0.8s ease-out forwards;
             animation-delay: 0.4s;
             opacity: 0;
+            padding-top: 80px;  /* Added for navbar height */
+            margin-top: -80px;  /* Offset padding */
+            scroll-margin-top: 80px; /* For modern browsers */
         }
         
         .feature-box {
@@ -1014,8 +1018,7 @@
                 translateY(calc(-50% + ${-yValue * speedy}px))
             `;
         });
-        
-    // Navbar scroll effect
+          // Navbar scroll effect
     window.addEventListener('scroll', function() {
         const navbar = document.querySelector('.navbar');
         if (window.scrollY > 50) {
@@ -1023,6 +1026,28 @@
         } else {
             navbar.classList.remove('scrolled');
         }
+        
+        // Update the active nav link based on scroll position
+        const sections = document.querySelectorAll('.content-section, #features, #home');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const navbarHeight = navbar.offsetHeight;
+        
+        let current = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - navbarHeight - 100;
+            const sectionHeight = section.offsetHeight;
+            if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
     });
     });    // Store user data
     const users = [
@@ -1032,8 +1057,7 @@
     
     // Save to localStorage for testing purposes
     localStorage.setItem('users', JSON.stringify(users));
-    
-    // Smooth scrolling for navigation links
+      // Smooth scrolling for navigation links with navbar height offset
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -1043,9 +1067,18 @@
             
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                // Get navbar height to use as offset
+                const navbar = document.querySelector('.navbar');
+                const navbarHeight = navbar.offsetHeight;
+                
+                // Calculate the scroll position
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - navbarHeight - 20; // Added extra 20px for spacing
+                
+                // Scroll to the adjusted position
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
                 });
             }
         });
