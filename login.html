@@ -324,13 +324,33 @@
             color: white;
             border: none;
         }
-        
-        .btn-primary:hover {
+          .btn-primary:hover {
             background: linear-gradient(45deg, #0c2461, #1e3799);
             box-shadow: 0 5px 15px rgba(26, 83, 181, 0.4);
         }
         
-        .forgot-password {
+        .btn-secondary {
+            background: #4a69bd;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            width: auto;
+            display: inline-block;
+            margin-left: 10px;
+            margin-bottom: 0;
+        }
+        
+        .btn-secondary:hover {
+            background: #0c2461;
+            box-shadow: 0 3px 10px rgba(26, 83, 181, 0.3);
+        }
+        
+        .btn-navigation {
+            border: none;
+            cursor: pointer;
+        }
+        
+        /* .forgot-password {
             display: block;
             margin-top: 15px;
             color: #4a69bd;
@@ -338,7 +358,7 @@
             font-size: 14px;
         }
         
-        .forgot-password:hover {
+        /* .forgot-password:hover {
             text-decoration: underline;
         }
         
@@ -347,15 +367,11 @@
             font-size: 15px;
             color: #555;
         }
-        
-        .register-link a {
-            color: #4a69bd;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        
-        .register-link a:hover {
-            text-decoration: underline;
+          /* Updated styles for register button */
+        .register-link {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
         }
         
         .error-message {
@@ -385,8 +401,7 @@
         }
     </style>
 </head>
-<body>
-    <a href="index.html" class="home-link">← Back to Home</a>
+<body>    <button onclick="window.location.href='index.html'" class="home-link btn-navigation">← Back to Home</button>
     
     <div class="parallax-wrapper">
         <div class="parallax-item element-bg" data-speedx="0.01" data-speedy="0.01" data-speedz="0" data-rotation="0">
@@ -450,12 +465,8 @@
             </div>
             
             <button type="submit" class="btn btn-primary">Log In</button>
-            <div class="error-message" id="errorMsg"></div>
-            
-            <a href="forgot-password.html" class="forgot-password">Forgot your password?</a>
-            
-            <div class="register-link">
-                Don't have an account? <a href="register.html">Register here</a>
+            <div class="error-message" id="errorMsg"></div>              <div class="register-link">
+                Don't have an account? <button onclick="window.location.href='register.html'" class="btn btn-secondary">Register here</button>
             </div>
         </form>
     </div>
@@ -501,13 +512,12 @@
             const user = users.find(user => user.email === email && user.password === password);
             
             const errorMsg = document.getElementById('errorMsg');
-            
-            if (user) {
+              if (user) {
                 // Store logged in user info in session storage
                 sessionStorage.setItem('currentUser', JSON.stringify(user));
                 
-                // Redirect to dashboard
-                window.location.href = 'dashboard.html';
+                // Redirect to dashboard selection page
+                window.location.href = 'dashboard-selection.html';
             } else {
                 errorMsg.textContent = 'Invalid email or password. Please try again.';
                 errorMsg.style.display = 'block';

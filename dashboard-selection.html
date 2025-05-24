@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Property Pulse - Dashboard</title>
+    <title>Property Pulse - Dashboard Selection</title>
     <style>
         * {
             margin: 0;
@@ -22,6 +22,8 @@
             padding: 0;
             position: relative;
             color: #333;
+            display: flex;
+            flex-direction: column;
         }
         
         /* Navbar styles */
@@ -54,34 +56,6 @@
             margin: 0;
         }
         
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-        
-        .nav-link {
-            color: #0a3d62;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 16px;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            position: relative;
-            padding: 5px 10px;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        
-        .nav-link:hover {
-            color: #4a69bd;
-            transform: translateY(-2px);
-        }
-        
-        .nav-link.active {
-            color: #4a69bd;
-            background: rgba(74, 105, 189, 0.08);
-            box-shadow: 0 1px 8px rgba(74, 105, 189, 0.1);
-        }
-        
         .user-info {
             display: flex;
             align-items: center;
@@ -108,44 +82,103 @@
             box-shadow: 0 5px 15px rgba(26, 83, 181, 0.4);
         }
         
-        /* Dashboard container */
-        .dashboard-container {
-            padding-top: 90px;
+        /* Selection container */
+        .selection-container {
+            padding-top: 120px;
             padding-bottom: 40px;
             margin: 0 auto;
-            min-height: calc(100vh - 90px);
-            height: auto;
-        }
-        
-        .dashboard-content {
-            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 1200px;
             width: 100%;
-            min-height: calc(100vh - 130px);
         }
         
-        iframe {
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .selection-heading {
+            font-size: 32px;
+            color: #0a3d62;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .dashboards-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
             width: 100%;
-            height: 800px; /* Increased fixed height */
-            border: none;
         }
         
-        .back-btn {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            width: 350px;
+            max-width: 100%;
+            cursor: pointer;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dashboard-image {
+            width: 100%;
+            height: 180px;
+            background-color: #4a69bd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .dashboard-card:nth-child(2) .dashboard-image {
+            background-color: #0a3d62;
+        }
+        
+        .dashboard-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .dashboard-title {
+            font-size: 20px;
+            color: #0a3d62;
+            margin-bottom: 10px;
+        }
+        
+        .dashboard-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .btn-primary {
             background: linear-gradient(45deg, #0a3d62, #4a69bd);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 10;
         }
         
-        .back-btn:hover {
+        .btn-primary:hover {
             background: linear-gradient(45deg, #0c2461, #1e3799);
             box-shadow: 0 5px 15px rgba(26, 83, 181, 0.4);
         }
@@ -157,16 +190,21 @@
                 flex-wrap: wrap;
             }
             
-            .nav-links {
-                order: 3;
-                width: 100%;
-                justify-content: center;
-                margin-top: 10px;
-                gap: 15px;
-            }
-            
             .logo h1 {
                 font-size: 20px;
+            }
+            
+            .selection-heading {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+            
+            .dashboards-grid {
+                gap: 20px;
+            }
+            
+            .dashboard-card {
+                width: 300px;
             }
         }
     </style>
@@ -176,22 +214,35 @@
         <div class="logo">
             <h1>Property Pulse</h1>
         </div>
-        <div class="nav-links">
-            <a href="#" class="nav-link active">Dashboard</a>
-        </div>
         <div class="user-info">
             <span class="username" id="userDisplayName">Welcome, User</span>
             <button class="logout-btn" id="logoutBtn">Logout</button>
         </div>
     </nav>
     
-    <div class="dashboard-container">
-        <div class="dashboard-content">
-            <iframe src="https://us1.ca.analytics.ibm.com/bi/?perspective=dashboard&amp;pathRef=.my_folders%2FProperty%2BPulse%2BDashboard&amp;closeWindowOnLastView=true&amp;ui_appbar=false&amp;ui_navbar=false&amp;shareMode=embedded&amp;action=view&amp;mode=dashboard&amp;subView=model00000196a673fb5b_00000000" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+    <div class="selection-container">
+        <h1 class="selection-heading">Select a Dashboard</h1>
+        
+        <div class="dashboards-grid">
+            <div class="dashboard-card" onclick="window.location.href='dashboard.html'">
+                <div class="dashboard-image">Dashboard 1</div>
+                <div class="dashboard-info">
+                    <h2 class="dashboard-title">Main Dashboard</h2>
+                    <p class="dashboard-description">View your property analytics and insights in our main dashboard.</p>
+                    <button class="btn btn-primary">Access Dashboard 1</button>
+                </div>
+            </div>
+            
+            <div class="dashboard-card" onclick="window.location.href='dashboard2.html'">
+                <div class="dashboard-image">Dashboard 2</div>
+                <div class="dashboard-info">
+                    <h2 class="dashboard-title">Secondary Dashboard</h2>
+                    <p class="dashboard-description">Access additional property insights and specialized reports.</p>
+                    <button class="btn btn-primary">Access Dashboard 2</button>
+                </div>
+            </div>
         </div>
     </div>
-    
-    <button class="back-btn" onclick="window.location.href='dashboard-selection.html'">← Back to Selection</button>
 
     <script>
         // Check if user is logged in
